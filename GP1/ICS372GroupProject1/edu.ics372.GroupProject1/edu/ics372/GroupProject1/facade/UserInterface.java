@@ -2,7 +2,11 @@ package edu.ics372.GroupProject1.facade;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import edu.ics372.GroupProject1.collections.*;
+import edu.ics372.GroupProject1.entities.*;
 
 public class UserInterface {
 
@@ -16,6 +20,7 @@ public class UserInterface {
 	public static void main(String[] args) {
 
 		UserInterface userInterface = new UserInterface();
+		private ArrayList<Product> products = new ArrayList<>();
 
 		try {
 			userInterface.run();
@@ -164,19 +169,23 @@ public class UserInterface {
 		System.exit(0);
 	}// end void exit
 
-	public void addProducts() {
-		do {
-			Request.instance().setProductName(getName("Emter product: "));
-			Request.instance().setProductId(getToken("Enter ID: "));
-			Request.instance().setProductPrice(getToken("Enter price: "));
-			Request.instance().setProductMinOrderLevel(getToken("Enter minimun order level: "));
-
-			Result result = business.addProduct(Request.instance());
-
-			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-
+	public void addProducts(String productName, String productID, double productPrice, int productMinOrderLevel) {
+		for (Product product: products) {
+			if(product.getProductName().equals(productName)) {
+				System.out.println("Already exists product name: " + productName);
+				return;
 			}
-		} while (yesOrNo("Add more products? "));
+		}// end for loop
+		
+		Product product = new Product(productName, productID, productPrice, productMinOrderLevel);
+		products.add(product);
+		
+		int orderQuantity = productMinOrderLevel * 2;
+		System.out.println("Ordering " + orderQuantity + " of " + productName);
+		
+		//TODO
+		
+		
 	}// end addProduct
 
 }

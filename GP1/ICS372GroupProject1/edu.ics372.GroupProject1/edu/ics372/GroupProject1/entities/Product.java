@@ -1,6 +1,8 @@
 package edu.ics372.GroupProject1.entities;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable{
 	private String productName;
 	private String productID;
 	private double productPrice;
@@ -10,6 +12,13 @@ public class Product {
 	/**
 	 * The Product class constructor initializes productName, productID,
 	 * currentPrice, and minReorderLevel. And set first quantity to 0
+	 * @param productName is the name of the product
+	 * 
+	 * @param productID is the ID of the product
+	 * 
+	 * @param productPrice is the current price of the product
+	 * 
+	 * @param productMinOrderLevel is the minimum reorder level for the product.
 	 */
 	public Product(String productName, String productID, double productPrice, int productMinOrderLevel) {
 		this.productName = productName;

@@ -5,12 +5,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ics372.GroupProject1.entities.Member;
+
 /**
  * The collection class for Member objects
  * 
  * @author Ethan Lo
  */
 public class MemberList implements Iterable<Member>, Serializable {
+	
 	private List<Member> members = new LinkedList<Member>();
 	private static MemberList memberList;
 

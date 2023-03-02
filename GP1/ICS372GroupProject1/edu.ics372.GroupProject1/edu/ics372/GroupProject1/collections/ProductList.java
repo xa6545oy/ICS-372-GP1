@@ -7,12 +7,21 @@ import java.util.List;
 
 import edu.ics372.GroupProject1.entities.Product;
 
+/**
+ * The collection class for Product objects
+ * 
+ * @author Tai Vu
+ */
 public class ProductList implements Iterable<Product>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private List<Product> products = new ArrayList<Product>();
 	private static ProductList productList;
 
+
+	/*
+	 * Private for singleton Creates products collection object
+	 */
 	private ProductList() {
 
 	}

@@ -9,7 +9,7 @@ public class BusinessSystem implements Serializable {
 	private ProductList products = ProductList.getInstance();
 	private static BusinessSystem business;
 
-	private BusinessSystem() {
+	public BusinessSystem() {
 
 	}
 
