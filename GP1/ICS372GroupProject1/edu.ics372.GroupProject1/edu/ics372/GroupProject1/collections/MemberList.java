@@ -13,7 +13,7 @@ import edu.ics372.GroupProject1.entities.Member;
  * @author Ethan Lo
  */
 public class MemberList implements Iterable<Member>, Serializable {
-	
+	private static final long serialVersionUID = 1L;
 	private List<Member> members = new LinkedList<Member>();
 	private static MemberList memberList;
 

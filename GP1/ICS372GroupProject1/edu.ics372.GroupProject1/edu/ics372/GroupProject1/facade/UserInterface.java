@@ -132,9 +132,9 @@ public class UserInterface {
 			if (business == null) {
 				business = BusinessSystem.retrieve();
 				if (business != null) {
-					System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+					System.out.println(" The library has been successfully retrieved\n");
 				} else {
-					System.out.println("File doesnt exist; creating new library");
+					System.out.println("File doesnt exist; creating new business system");
 					business = BusinessSystem.instance();
 				}
 			}
@@ -200,6 +200,25 @@ public class UserInterface {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Prompts for a command from the keyboard
+	 * 
+	 * @return a valid command
+	 * 
+	 */
+	public int getCommand() {
+		while (true) {
+			try {
+				int inputValue = Integer.parseInt(getToken("Enter command: "));
+				if (inputValue >= EXIT && inputValue <= HELP) {
+					return inputValue;
+				}
+			} catch (NumberFormatException nfe) {
+				System.out.println("Enter a number: ");
+			}
+		} // end while loop
 	}
 
 	public void help() {

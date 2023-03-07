@@ -1,9 +1,12 @@
 package edu.ics372.GroupProject1.entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Member implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String address;
 	private String phone;
@@ -95,5 +98,9 @@ public class Member implements Serializable {
 	 */
 	public void setName(String newName) {
 		name = newName;
+	}
+
+	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
+		idCounter = (int) input.readObject();
 	}
 }
