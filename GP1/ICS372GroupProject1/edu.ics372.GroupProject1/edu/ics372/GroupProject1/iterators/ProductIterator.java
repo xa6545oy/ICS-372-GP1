@@ -1,4 +1,4 @@
-package iterators;
+package edu.ics372.GroupProject1.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

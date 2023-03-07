@@ -11,7 +11,7 @@ import java.util.Iterator;
 import edu.ics372.GroupProject1.collections.ProductList;
 import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
-import iterators.ProductIterator;
+import edu.ics372.GroupProject1.iterators.ProductIterator;
 
 public class BusinessSystem implements Serializable {
 	private static final long serialVersionUID = 1L;
