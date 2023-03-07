@@ -4,10 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 
 import edu.ics372.GroupProject1.collections.ProductList;
 import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
+import iterators.ProductIterator;
 
 public class BusinessSystem implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,17 @@ public class BusinessSystem implements Serializable {
 	 */
 	private BusinessSystem() {
 
+	}
+
+	/**
+	 * Returns an iterator to Product info. The Iterator returned is a safe one, in
+	 * the sense that only copies of the Member fields are assembled into the
+	 * objects returned via next().
+	 * 
+	 * @return an Iterator to Result - only the Product fields are valid.
+	 */
+	public Iterator<Result> getProducts() {
+		return new ProductIterator(products.iterator());
 	}
 
 	public static BusinessSystem instance() {

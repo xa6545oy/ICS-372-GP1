@@ -9,7 +9,7 @@ public class Product implements Serializable {
 	private String productID;
 	private double productPrice;
 	private int productMinOrderLevel;
-	private int quantity;
+	private int productQuantity;
 
 	/**
 	 * The Product class constructor initializes productName, productID,
@@ -107,19 +107,29 @@ public class Product implements Serializable {
 	/**
 	 * get quantity for the product
 	 * 
-	 * @param quantity
+	 * @param productQuantity
 	 */
-	public int getQuantity() {
-		return quantity;
+	public int getProductQuantity() {
+		return productQuantity;
 	}
 
 	/**
 	 * set quantity for the product
 	 * 
+	 * @param productQuantity
+	 */
+	public void setProductQuantity(int quantity) {
+		this.productQuantity = quantity;
+	}
+
+	/**
+	 * Generate an reorder twice as productMinOrderLevel
+	 * 
 	 * @param quantity
 	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void reorder() {
+		int reorderQuantity = productMinOrderLevel * 2;
+		System.out.println("Ordering " + reorderQuantity + " units of " + productName);
 	}
 
 	/**
@@ -130,7 +140,7 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "Product [productName=" + productName + ", productID=" + productID + ", currentPrice=" + productPrice
-				+ ", minReorderLevel=" + productMinOrderLevel + ", quantity=" + quantity + "]";
+				+ ", minReorderLevel=" + productMinOrderLevel + ", quantity=" + productQuantity + "]";
 	}
 
 }

@@ -5,9 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.util.Iterator;
 import java.util.StringTokenizer;
-
-import edu.ics372.GroupProject1.entities.Product;
 
 public class UserInterface {
 
@@ -163,7 +162,7 @@ public class UserInterface {
 				// retrieveMemberInfo();
 				break;
 			case ADD_PRODUCTS:
-				// addProduct();
+				addProduct();
 				break;
 			case CHECK_MEMBER_CART:
 
@@ -184,7 +183,7 @@ public class UserInterface {
 
 				break;
 			case LIST_ALL_PRODUCTS:
-
+				listProducts();
 				break;
 			case LIST_OUTSTANDING_ORDER:
 
@@ -242,37 +241,62 @@ public class UserInterface {
 	}
 
 	/**
-	 * print all the members
+	 * Gets a name after prompting
+	 * 
+	 * @param prompt - whatever the user wants as prompt
+	 * @return - the token from the keyboard
+	 * 
 	 */
-	public void listMembers() {
-		System.out.println("Getting ready to print all Members information");
-		business.listMembers();
+	public String getInput(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				return line;
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+
 	}
 
 	/**
-	 * print all the products
+	 * Method to be called for adding a product. It prompts user to enter certain
+	 * product information and then add to the system data.
 	 */
-	public void listProducts() {
-		System.out.println("Getting ready to print all Products information");
-		business.listProducts();
-	}
+	public void addProduct() {
+		Request.instance().setProductName(getInput("Enter product name: "));
+		Request.instance().setProductId(getInput("Enter product ID: "));
 
-	public void addProducts(String productName, String productID, double productPrice, int productMinOrderLevel) {
-		for (Product product : products) {
-			if (product.getProductName().equals(productName)) {
-				System.out.println("Already exists product name: " + productName);
-				return;
-			}
-		} // end for loop
+		String productPriceInString = getInput("Enter product price: ");
+		double productPrice = Double.parseDouble(productPriceInString);
+		Request.instance().setProductPrice(productPrice);
 
-		Product product = new Product(productName, productID, productPrice, productMinOrderLevel);
-		products.add(product);
+		String productMinOrderLevelInString = getInput("Enter product minimum order level: ");
+		int productMinOrderLevel = Integer.parseInt(productMinOrderLevelInString);
+		Request.instance().setProductMinOrderLevel(productMinOrderLevel);
 
-		int orderQuantity = productMinOrderLevel * 2;
-		System.out.println("Ordering " + orderQuantity + " of " + productName);
-
-		// TODO
+		Result result = business.addProduct(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("Could not add product!");
+		} else {
+			System.out.println(result.getProductName() + "'s id is " + result.getProductId());
+		}
 
 	}// end addProduct
+
+	/**
+	 * Display all products information
+	 */
+	public void listProducts() {
+		Iterator<Result> iterator = business.getProducts();
+		System.out.println("Getting ready to print all Products information");
+		System.out.println("List of all products:");
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			System.out.println(result.getProductName() + " " + result.getProductId() + " " + result.getProductPrice()
+					+ " " + result.getProductMinOrderLevel() + " " + result.getProductQuantity());
+		} // end while loop
+	}// end getProducts
 
 }

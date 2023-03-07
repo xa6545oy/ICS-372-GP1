@@ -18,7 +18,6 @@ public class ProductList implements Iterable<Product>, Serializable {
 	private List<Product> products = new ArrayList<Product>();
 	private static ProductList productList;
 
-
 	/*
 	 * Private for singleton Creates products collection object
 	 */
@@ -55,6 +54,20 @@ public class ProductList implements Iterable<Product>, Serializable {
 		products.add(product);
 		return true;
 	}// end insertProduct
+
+	/**
+	 * Add a new product to the list. Check for existing products before adding.
+	 * 
+	 * @param product
+	 */
+	public void addProduct(Product product) {
+		if (products.contains(product)) {
+			System.out.println("Product is already exists.");
+		} else {
+			products.add(product);
+			product.reorder();
+		}
+	}
 
 	/**
 	 * get product list

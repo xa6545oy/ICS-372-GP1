@@ -7,6 +7,7 @@ public abstract class DataTransfer {
 	private String productName;
 	private double productPrice;
 	private int productMinOrderLevel;
+	private int productQuantity;
 
 	/**
 	 * This sets all fields to "none".
@@ -48,12 +49,17 @@ public abstract class DataTransfer {
 		this.productMinOrderLevel = minOrderLevel;
 	}
 
+	public double getProductQuantity() {
+		return productQuantity;
+	}
+
 	public void setProductFields(Product product) {
 
 		productId = product.getProductID();
 		productName = product.getProductName();
 		productPrice = product.getProductPrice();
 		productMinOrderLevel = product.getProductMinOrderLevel();
+		productQuantity = product.getProductQuantity();
 
 	}// end setProdictFields
 
@@ -62,6 +68,7 @@ public abstract class DataTransfer {
 		productName = "No product Name";
 		productPrice = 0;
 		productMinOrderLevel = 0;
+		productQuantity = 0;
 	}// end reset
 
 }
