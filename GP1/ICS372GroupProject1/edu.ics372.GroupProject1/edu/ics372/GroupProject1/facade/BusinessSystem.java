@@ -1,8 +1,10 @@
 package edu.ics372.GroupProject1.facade;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -88,5 +90,55 @@ public class BusinessSystem implements Serializable {
 			return result;
 		}
 	}
+
+	/**
+	 * Save data to system
+	 * 
+	 * @return true if data is successfully saved
+	 */
+	public boolean save() {
+		try {
+			FileOutputStream fileIn = new FileOutputStream("businessData");
+			ObjectOutputStream output = new ObjectOutputStream(fileIn);
+			output.writeObject(business);
+			Member.save(output);
+			fileIn.close();
+			return true;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return false;
+		}
+	}// end save
+
+	/**
+	 * Given a product name, the system return the product
+	 * 
+	 * @return product
+	 */
+	public Product getProductByName(String productName) {
+		for (Product product : products) {
+			if (product.getProductName().equals(productName)) {
+				return product;
+			}
+		}
+		return null;
+	}// end getProductByName
+
+	/**
+	 * Given a product name, the system return the product name, id, price, min
+	 * order level, quantity. if not found, notify user.
+	 * 
+	 * @return product
+	 */
+	public String getProductInfoByName(String productName) {
+		Product product = getProductByName(productName);
+		if (product != null) {
+			return "Product Name: " + product.getProductName() + "Product ID: " + product.getProductID() + ", Price: "
+					+ product.getProductPrice() + ", Minimun order level: " + product.getProductMinOrderLevel()
+					+ ", Stock quantity: " + product.getProductQuantity();
+		} else {
+			return "Product not found!!";
+		}
+	}// end getProductInfoByName
 
 }

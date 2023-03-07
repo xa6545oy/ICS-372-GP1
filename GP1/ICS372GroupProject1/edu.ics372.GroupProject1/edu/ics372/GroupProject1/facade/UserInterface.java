@@ -122,27 +122,6 @@ public class UserInterface {
 	}
 
 	/**
-	 * Method to be called for retrieving saved data. Uses the appropriate Library
-	 * method for retrieval.
-	 * 
-	 */
-	private void retrieve() {
-		try {
-			if (business == null) {
-				business = BusinessSystem.retrieve();
-				if (business != null) {
-					System.out.println(" The library has been successfully retrieved\n");
-				} else {
-					System.out.println("File doesnt exist; creating new business system");
-					business = BusinessSystem.instance();
-				}
-			}
-		} catch (Exception cnfe) {
-			cnfe.printStackTrace();
-		}
-	}
-
-	/**
 	 * Orchestrates the whole process. Calls the appropriate method for the
 	 * different functionalities.
 	 * 
@@ -168,7 +147,7 @@ public class UserInterface {
 
 				break;
 			case RETRIEVE_PRODUCT_INFO:
-
+				retrieveProductByName();
 				break;
 			case PROCESS_SHIPMENT:
 
@@ -189,10 +168,10 @@ public class UserInterface {
 
 				break;
 			case SAVE:
-				// save();
+				save();
 				break;
 			case RETRIEVE_FILE:
-
+				retrieve();
 				break;
 			case HELP:
 				help();
@@ -220,26 +199,6 @@ public class UserInterface {
 		} // end while loop
 	}
 
-	public void help() {
-		System.out.println("What would you like to do?");
-		System.out.println("0.\tExit - Quit the program");
-		System.out.println("1.\tEnroll a member");
-		System.out.println("2.\tRemove a member");
-		System.out.println("3.\tRetrieve member info");
-		System.out.println("4.\tAdd products");
-		System.out.println("5.\tCheck out a member’ cart");
-		System.out.println("6.\tRetrieve product info");
-		System.out.println("7.\tProcess shipment");
-		System.out.println("8.\tChange price");
-		System.out.println("9.\tPrint transactions");
-		System.out.println("10.\tList all members");
-		System.out.println("11.\tList all products");
-		System.out.println("12.\tList all outstanding orders");
-		System.out.println("13.\tSaves all data to disk.");
-		System.out.println("14.\tRetrieves a given file and use it");
-		System.out.println("15.\tHelp menu");
-	}
-
 	/**
 	 * Gets a name after prompting
 	 * 
@@ -258,6 +217,30 @@ public class UserInterface {
 			}
 		} while (true);
 
+	}
+
+	public void help() {
+		System.out.println("What would you like to do?");
+		System.out.println("0.\tExit - Quit the program");
+		System.out.println("1.\tEnroll a member");
+		System.out.println("2.\tRemove a member");
+		System.out.println("3.\tRetrieve member info");
+		System.out.println("4.\tAdd products");
+		System.out.println("5.\tCheck out a member’ cart");
+		System.out.println(
+				"6.\tRetrieve product info: Given a product name, the system displays the product’s id, price, and stock in hand.");
+		System.out.println("7.\tProcess shipment");
+		System.out.println("8.\tChange price");
+		System.out.println("9.\tPrint transactions");
+		System.out.println("10.\tList all members. List name, id, and address of each member.");
+		System.out.println(
+				"11.\tList all products. List product name, id, current price, and a minimum reorder level for the product.");
+		System.out.println(
+				"12.\tList all outstanding orders. List for each order that has not been fulfilled, the product name, id, and amount ordered.");
+		System.out.println("13.\tSave: Saves all data to disk.");
+		System.out.println(
+				"14.\tRetrieve: Retrieves a given file and use it. Only applicable before any other command is issued.");
+		System.out.println("15.\tHelp menu");
 	}
 
 	/**
@@ -298,5 +281,47 @@ public class UserInterface {
 					+ " " + result.getProductMinOrderLevel() + " " + result.getProductQuantity());
 		} // end while loop
 	}// end getProducts
+
+	/**
+	 * Saving the Business object
+	 */
+	private void save() {
+		if (business.save()) {
+			System.out.println("Sucessfully save Business data!!");
+		} else {
+			System.out.println("Error while saving Business data to system!");
+		}
+	}
+
+	/**
+	 * Method to be called for retrieving saved data. Uses the appropriate Library
+	 * method for retrieval.
+	 */
+	private void retrieve() {
+		try {
+			if (business == null) {
+				business = BusinessSystem.retrieve();
+				if (business != null) {
+					System.out.println("Sucessfuly load Business data!!");
+				} else {
+					System.out.println("Error while loading Business data! Create a new data? ");
+					business = BusinessSystem.instance();
+				}
+			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+		}
+	}
+
+	public void retrieveProductByName() {
+		String productName = getInput("Enter product name: ");
+		try {
+			String info = business.getProductInfoByName(productName);
+			System.out.println(info);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
