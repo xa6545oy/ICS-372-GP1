@@ -49,21 +49,6 @@ public class MemberList implements Iterable<Member>, Serializable {
 		members.add(member);
 		return true;
 	}
-	
-	/*
-	 * Removes a member from the memberList
-	 * 
-	 * @param memberId is the member id
-	 * @return true if member is removed
-	 */
-	public boolean removeMember(String memberId) {
-		Member member = search(memberId);
-		
-		if(member == null)
-			return false;
-		else
-			return members.remove(member);
-	}
 
 	/**
 	 * Checks if a member exists using the member id

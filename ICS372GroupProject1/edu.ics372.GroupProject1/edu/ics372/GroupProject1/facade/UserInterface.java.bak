@@ -136,7 +136,7 @@ public class UserInterface {
 				addMember();
 				break;
 			case REMOVE_MEMBER:
-				removeMember();
+				// removeMember();
 				break;
 			case RETRIEVE_MEMBER_INFO:
 				// retrieveMemberInfo();
@@ -285,7 +285,7 @@ public class UserInterface {
 
 	
 	/*
-	 * Method to create a member and requests information about the member as well as a fee
+	 * Used to create a member and requests information about the member as well as a fee
 	 * that is to be paid to become a member
 	 */
 	public void addMember() {
@@ -316,28 +316,6 @@ public class UserInterface {
 			System.out.println(result.getMemberId() + " " + result.getMemberName() + " " + result.getMemberAddress());
 		} // end while loop
 	} // end listMembers
-	
-	/*
-	 * Method to be called for removing members. Prompts user to enter the member id to be removed
-	 */
-	public void removeMember() {
-		do {
-			Request.instance().setMemberId(getInput("Enter member id: "));
-			Result result = business.removeMember(Request.instance());
-			switch(result.getResultCode()) {
-			case Result.MEMBER_NOT_FOUND:
-				System.out.println("Member id " + Request.instance().getMemberId() + " does not exist in the system.");
-				break;
-			case Result.OPERATION_COMPLETED:
-				System.out.println("Member was successfully removed.");
-			default:
-				System.out.println("There are no more members.");
-			}
-			
-			if(!yesOrNo("Remove more members?"))
-				break;
-		} while(true);
-	}
 	
 	/**
 	 * Saving the Business object

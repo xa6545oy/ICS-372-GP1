@@ -117,10 +117,6 @@ public abstract class DataTransfer {
 		this.memberJoinDate = memberJoinDate;
 	}
 	
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-	
 	public void setMemberFields(Member member) {
 
 		memberName = member.getMemberName();

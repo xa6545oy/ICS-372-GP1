@@ -169,29 +169,5 @@ public class BusinessSystem implements Serializable {
 			return result;
 		}
 	}
-	
-	/*
-	 * Removes a specific member from the memberlist
-	 * 
-	 * @param memberId is the id of a member
-	 * @return the code of the outcome
-	 */
-	public Result removeMember(Request request) {
-		Result result = new Result();
-		Member member = members.search(request.getMemberId());
-		
-		if(member == null) {
-			result.setResultCode(Result.MEMBER_NOT_FOUND);
-			return result;
-		}
-		
-		if(members.removeMember(request.getMemberId())) {
-			result.setResultCode(Result.OPERATION_COMPLETED);
-			return result;
-		}
-		
-		result.setResultCode(Result.OPERATION_FAILED);
-		return result;
-	}
 
 }
