@@ -12,6 +12,7 @@ public class Product implements Serializable {
 	private int productQuantity;
 	private static final String PRODUCT_STRING = "P";
 	private static int idCounter;
+	private boolean orderPlaced;
 
 	/**
 	 * The Product class constructor initializes productName, productID,
@@ -29,7 +30,9 @@ public class Product implements Serializable {
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.productMinOrderLevel = productMinOrderLevel;
-		
+		this.productQuantity = productMinOrderLevel * 2;
+		this.orderPlaced = false;
+
 		productID = PRODUCT_STRING + ++idCounter;
 	}// end public Product
 
@@ -114,6 +117,24 @@ public class Product implements Serializable {
 	 */
 	public void setProductQuantity(int quantity) {
 		this.productQuantity = quantity;
+	}
+
+	/**
+	 * Getter for orderPlaced. Check for if order is placed or not
+	 * 
+	 * @param boolean
+	 */
+	public boolean isOrderPlaced() {
+		return orderPlaced;
+	}
+
+	/**
+	 * Setter for orderPlaced. Check for if order is placed or not
+	 * 
+	 * @param boolean
+	 */
+	public void setOrderPlaced(boolean orderPlaced) {
+		this.orderPlaced = orderPlaced;
 	}
 
 	/**
