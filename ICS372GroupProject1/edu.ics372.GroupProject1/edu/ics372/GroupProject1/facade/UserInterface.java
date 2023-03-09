@@ -179,7 +179,7 @@ public class UserInterface {
 				break;
 			}
 		}
-		
+
 		exit();
 	}
 
@@ -222,6 +222,9 @@ public class UserInterface {
 
 	}
 
+	/**
+	 * Method display help menu; descriptions for each cases.
+	 */
 	public void help() {
 		System.out.println("What would you like to do?");
 		System.out.println("0.\tExit - Quit the program");
@@ -252,7 +255,7 @@ public class UserInterface {
 	 */
 	public void addProduct() {
 		Request.instance().setProductName(getInput("Enter product name: "));
-		
+
 		double productPrice = Double.parseDouble(getInput("Enter product price: "));
 		Request.instance().setProductPrice(productPrice);
 
@@ -275,7 +278,8 @@ public class UserInterface {
 	public void listProducts() {
 		Iterator<Result> iterator = business.getProducts();
 		System.out.println("Getting ready to print all Products information");
-		System.out.println("List of all products (product name, id, pricing, and minimum reorder level for the product)");
+		System.out
+				.println("List of all products (product name, id, pricing, and minimum reorder level for the product)");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
 			System.out.println(result.getProductName() + " " + result.getProductId() + " " + result.getProductPrice()
@@ -283,48 +287,52 @@ public class UserInterface {
 		} // end while loop
 	}// end getProducts
 
-	
 	/*
-	 * Method to create a member and requests information about the member as well as a fee
-	 * that is to be paid to become a member
+	 * Method to create a member and requests information about the member as well
+	 * as a fee that is to be paid to become a member
 	 */
 	public void addMember() {
 		Request.instance().setMemberName(getInput("Enter member name: "));
 		Request.instance().setMemberAddress(getInput("Enter member address: "));
 		Request.instance().setMemberPhone(getInput("Enter member phone number: "));
 		double amountPaid = Double.parseDouble(getInput("Please pay the membership fee of 50: "));
-		while(amountPaid != MEMBERSHIP_FEE) {
-			if(amountPaid == 0)
+		while (amountPaid != MEMBERSHIP_FEE) {
+			if (amountPaid == 0)
 				return;
-			amountPaid = Double.parseDouble(getInput("Membership fee is 50. Amount paid is not enough! Please re-enter the correct amount or enter 0 to exit."));
+			amountPaid = Double.parseDouble(getInput(
+					"Membership fee is 50. Amount paid is not enough! Please re-enter the correct amount or enter 0 to exit."));
 		} // end while loop
-		
+
 		Request.instance().setMemberFee(amountPaid);
-		
+
 		Result result = business.addMember(Request.instance());
-		if(result.getResultCode() != Result.OPERATION_COMPLETED)
+		if (result.getResultCode() != Result.OPERATION_COMPLETED)
 			System.out.println("Could not add member");
 		else
 			System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
 	} // end addMember
-	
+
+	/*
+	 * Method to be called for listing all members
+	 */
 	public void listMembers() {
 		Iterator<Result> iterator = business.getMembers();
 		System.out.println("List of all members(id, name, address)");
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Result result = iterator.next();
 			System.out.println(result.getMemberId() + " " + result.getMemberName() + " " + result.getMemberAddress());
 		} // end while loop
 	} // end listMembers
-	
+
 	/*
-	 * Method to be called for removing members. Prompts user to enter the member id to be removed
+	 * Method to be called for removing members. Prompts user to enter the member id
+	 * to be removed
 	 */
 	public void removeMember() {
 		do {
 			Request.instance().setMemberId(getInput("Enter member id: "));
 			Result result = business.removeMember(Request.instance());
-			switch(result.getResultCode()) {
+			switch (result.getResultCode()) {
 			case Result.MEMBER_NOT_FOUND:
 				System.out.println("Member id " + Request.instance().getMemberId() + " does not exist in the system.");
 				break;
@@ -333,12 +341,12 @@ public class UserInterface {
 			default:
 				System.out.println("There are no more members.");
 			}
-			
-			if(!yesOrNo("Remove more members?"))
+
+			if (!yesOrNo("Remove more members?"))
 				break;
-		} while(true);
+		} while (true);
 	}
-	
+
 	/**
 	 * Saving the Business object
 	 */
@@ -370,6 +378,14 @@ public class UserInterface {
 		}
 	}
 
+	/*
+	 * Method to be called for retrieving all product by its name. Prompts user to
+	 * enter product name
+	 * 
+	 * @param productName
+	 * 
+	 * @return product information
+	 */
 	public void retrieveProductByName() {
 		String productName = getInput("Enter product name: ");
 		try {
@@ -379,6 +395,6 @@ public class UserInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	} // end retrieveProductByName
 
 }

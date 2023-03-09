@@ -33,6 +33,12 @@ public class ProductList implements Iterable<Product>, Serializable {
 		return productList;
 	}
 
+	/**
+	 * Search for product in product list. Prompts user to enter product ID
+	 * 
+	 * @param productID
+	 * @return product
+	 */
 	public Product searchProduct(String productID) {
 		Iterator<Product> productIterator = products.iterator();
 		while (productIterator.hasNext()) {
