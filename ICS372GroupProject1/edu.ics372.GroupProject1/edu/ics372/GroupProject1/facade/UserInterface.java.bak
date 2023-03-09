@@ -348,7 +348,7 @@ public class UserInterface {
 	} // end of removeMember
 	
 	/*
-	 * Method to be called when retrieving a certain member's information using their name as reference.
+	 * Method to be called when retrieving a certian member's information using their name as reference.
 	 * If there are more than 1 member with the same name it'll display all members with the name's information
 	 */
 	public void retrieveMemberInfo() {

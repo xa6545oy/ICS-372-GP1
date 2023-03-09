@@ -50,7 +50,7 @@ public class BusinessSystem implements Serializable {
 		} else {
 			return business;
 		}
-	} // end instance
+	}// end instance
 
 	/**
 	 * Retrieves the business data from disk
@@ -72,7 +72,7 @@ public class BusinessSystem implements Serializable {
 			cnfe.printStackTrace();
 			return null;
 		}
-	} // end of retrieve
+	}
 
 	/**
 	 * Organizes the operations for adding a product
@@ -95,7 +95,7 @@ public class BusinessSystem implements Serializable {
 			result.setResultCode(Result.OPERATION_FAILED);
 			return result;
 		}
-	} // end of addProduct
+	}
 
 	/**
 	 * Save data to system
@@ -114,7 +114,7 @@ public class BusinessSystem implements Serializable {
 			ioe.printStackTrace();
 			return false;
 		}
-	} // end save
+	}// end save
 
 	/*
 	 * Given a product name, the system return the product
@@ -128,7 +128,7 @@ public class BusinessSystem implements Serializable {
 			}
 		}
 		return null;
-	} // end getProductByName
+	}// end getProductByName
 
 	/**
 	 * Given a product name, the system return the product name, id, price, min
@@ -145,7 +145,7 @@ public class BusinessSystem implements Serializable {
 		} else {
 			return "Product not found!!";
 		}
-	} // end getProductInfoByName
+	}// end getProductInfoByName
 	
 	/**
 	 * Organizes the operations for adding a member
@@ -168,7 +168,7 @@ public class BusinessSystem implements Serializable {
 			result.setResultCode(Result.OPERATION_FAILED);
 			return result;
 		}
-	} // end of addMember
+	}
 	
 	/*
 	 * Removes a specific member from the memberlist
@@ -192,7 +192,7 @@ public class BusinessSystem implements Serializable {
 		
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
-	} // end of removeMember
+	}
 	
 	/*
 	 * Iterates through the members collection and adds all members with the name into the memberWithName
@@ -215,6 +215,6 @@ public class BusinessSystem implements Serializable {
 		Iterator<Result> iteratorOfName = memberWithName.iterator();
 		
 		return iteratorOfName;
-	} // end of retrieveMemberWithName
+	}
 
 }
