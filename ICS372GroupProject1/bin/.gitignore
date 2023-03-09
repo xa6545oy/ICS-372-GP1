@@ -1,3 +1,5 @@
 /edu/
 /module-info.class
 *.bak
+.classpath
+.project
