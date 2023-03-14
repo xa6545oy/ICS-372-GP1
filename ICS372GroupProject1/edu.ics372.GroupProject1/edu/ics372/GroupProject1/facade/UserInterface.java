@@ -157,7 +157,7 @@ public class UserInterface {
 
 				break;
 			case PRINT_TRANSACTION:
-
+				printTransaction();
 				break;
 			case LIST_ALL_MEMBERS:
 				listMembers();
@@ -419,5 +419,17 @@ public class UserInterface {
 			e.printStackTrace();
 		}
 	} // end retrieveProductByName
+
+	public void printTransaction() {
+		String memberID = getInput("Enter member ID: ");
+		String startDate = getInput("Enter start date (mm/dd/yyyy): ");
+		String endDate = getInput("Enter end date (mm/dd/yyyy): ");
+
+		try {
+			business.printTransactions(memberId, startDateString, endDateString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	} // end printTransaction()
 
 }
