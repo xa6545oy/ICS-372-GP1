@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import edu.ics372.GroupProject1.collections.MemberList;
 import edu.ics372.GroupProject1.collections.ProductList;
@@ -39,7 +40,7 @@ public class BusinessSystem implements Serializable {
 	public Iterator<Result> getProducts() {
 		return new ProductIterator(products.iterator());
 	}
-	
+
 	public Iterator<Result> getMembers() {
 		return new MemberIterator(members.iterator());
 	}
@@ -146,13 +147,13 @@ public class BusinessSystem implements Serializable {
 			return "Product not found!!";
 		}
 	} // end getProductInfoByName
-	
+
 	/**
 	 * Organizes the operations for adding a member
 	 * 
-	 * @param memberName member name
+	 * @param memberName    member name
 	 * @param memberAddress member address
-	 * @param memberPhone member phone
+	 * @param memberPhone   member phone
 	 * @return the Member object
 	 */
 	public Result addMember(Request request) {
@@ -169,51 +170,54 @@ public class BusinessSystem implements Serializable {
 			return result;
 		}
 	} // end of addMember
-	
+
 	/*
 	 * Removes a specific member from the memberlist
 	 * 
 	 * @param memberId is the id of a member
+	 * 
 	 * @return the code of the outcome
 	 */
 	public Result removeMember(Request request) {
 		Result result = new Result();
 		Member member = members.search(request.getMemberId());
-		
-		if(member == null) {
+
+		if (member == null) {
 			result.setResultCode(Result.MEMBER_NOT_FOUND);
 			return result;
 		}
-		
-		if(members.removeMember(request.getMemberId())) {
+
+		if (members.removeMember(request.getMemberId())) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			return result;
 		}
-		
+
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	} // end of removeMember
-	
+
 	/*
-	 * Iterates through the members collection and adds all members with the name into the memberWithName
-	 * collection and returns it
+	 * Iterates through the members collection and adds all members with the name
+	 * into the memberWithName collection and returns it
 	 * 
-	 * @param Request request is used to get the name of the member with the information we want
+	 * @param Request request is used to get the name of the member with the
+	 * information we want
+	 * 
 	 * @return is a collection of all or one member's information
 	 */
 	public Iterator<Result> retrieveMemberWithName(Request request) {
 		LinkedList<Result> memberWithName = new LinkedList<Result>();
-		
-		for(Member member : members) {
-			if(member.getMemberName().equals(request.getMemberName())) {
+
+		for (Member member : members) {
+			if (member.getMemberName().equals(request.getMemberName())) {
 				Result result = new Result();
 				result.setMemberFields(member);
 				memberWithName.add(result);
 			}
 		}
-		
+
 		Iterator<Result> iteratorOfName = memberWithName.iterator();
-		
+
 		return iteratorOfName;
 	} // end of retrieveMemberWithName
 

@@ -1,14 +1,19 @@
-package edu.ics372.GroupProject1.entities;
+package edu.ics372.GroupProject1.collections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.ics372.GroupProject1.entities.Member;
+import edu.ics372.GroupProject1.entities.Product;
+import edu.ics372.GroupProject1.entities.Transaction;
+
 public class Cart {
 	private Member member;
 	private List<Product> products;
 	private Map<Product, Integer> quantities;
+	private List<Transaction> transactions;
 
 	public Cart(Member member) {
 		this.member = member;

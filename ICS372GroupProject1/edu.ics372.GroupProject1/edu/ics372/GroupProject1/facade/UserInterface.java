@@ -177,6 +177,11 @@ public class UserInterface {
 			case HELP:
 				help();
 				break;
+			case EXIT:
+				exit();
+				break;
+			default:
+				break;
 			} // end of switch case
 		} // end of while loop
 
@@ -346,24 +351,25 @@ public class UserInterface {
 				break;
 		} while (true);
 	} // end of removeMember
-	
+
 	/*
-	 * Method to be called when retrieving a certain member's information using their name as reference.
-	 * If there are more than 1 member with the same name it'll display all members with the name's information
+	 * Method to be called when retrieving a certain member's information using
+	 * their name as reference. If there are more than 1 member with the same name
+	 * it'll display all members with the name's information
 	 */
 	public void retrieveMemberInfo() {
 		Request.instance().setMemberName(getInput("Enter the member's name: "));
 		Iterator<Result> memberWithName = business.retrieveMemberWithName(Request.instance());
-		
+
 		System.out.println("Information on " + Request.instance().getMemberName() + " (address, fee paid, id): ");
-		
-		while(memberWithName.hasNext()) {
+
+		while (memberWithName.hasNext()) {
 			Result result = memberWithName.next();
 			System.out.println(result.getMemberAddress() + " " + result.getMemberFee() + " " + result.getMemberId());
 		} // end of while loop
-		
+
 	} // end of retrieveMemberInfo
-	
+
 	/**
 	 * Saving the Business object
 	 */
