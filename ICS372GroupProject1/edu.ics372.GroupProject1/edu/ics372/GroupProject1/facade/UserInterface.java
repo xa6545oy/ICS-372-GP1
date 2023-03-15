@@ -438,6 +438,10 @@ public class UserInterface {
 		}
 	} // end printTransaction()
 
+	/**
+	 * method prompting user to enter data and update new stock for the product
+	 */
+
 	public void processShipment(){
 		String productId = getInput("Enter product ID");
 		String deliveredQuantity = getInput("Enter quantity: ");
@@ -451,6 +455,10 @@ public class UserInterface {
 			}
 		}
 	}
+
+	/**
+	 * user input data to check member out with products in cart
+	 */
 
 	public void CheckOutMemberCart(){
 		Cart cart = new Cart();

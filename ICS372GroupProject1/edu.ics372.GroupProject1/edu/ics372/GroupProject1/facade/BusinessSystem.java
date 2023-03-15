@@ -223,6 +223,11 @@ public class BusinessSystem implements Serializable {
 		return iteratorOfName;
 	} // end of retrieveMemberWithName
 
+	/**
+	 * checking if member can be checked out
+	 * @param member
+	 */
+
 	public void checkout(Member member) {
 		Cart cart = new Cart(member);
 		if (cart != null) {
