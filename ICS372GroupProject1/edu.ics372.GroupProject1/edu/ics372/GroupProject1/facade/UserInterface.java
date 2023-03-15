@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.lang.reflect.RecordComponent;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -154,7 +155,7 @@ public class UserInterface {
 				retrieveProductByName();
 				break;
 			case PROCESS_SHIPMENT:
-
+                processShipment();
 				break;
 			case CHANGE_PRICE:
 
@@ -435,16 +436,20 @@ public class UserInterface {
 		}
 	} // end printTransaction()
 
-	public void processShipment(String productId, int deliveredQuantity){
+	public void processShipment(){
+		String productId = getInput("Enter product ID");
+		String deliveredQuantity = getInput("Enter quantity: ");
+		System.out.println("Stock of the product has been updated: ");
 		for(Product product: ProductList.getInstance()){
 			int currentQuantity = product.getProductQuantity();
 			if(productId.equals(product.getProductID())){
 				currentQuantity += deliveredQuantity;
 				product.toString();
 			}
-
-
 		}
 	}
+
+
+
 
 }

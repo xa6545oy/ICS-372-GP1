@@ -61,7 +61,7 @@ public class Cart {
 	}
 
 	/**
-	 * method check out the items in cart
+	 * method check out the items in cart and check if the product needs to reorder
 	 * @param productId
 	 * @param quantity
 	 *
