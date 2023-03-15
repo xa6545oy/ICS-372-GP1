@@ -72,11 +72,10 @@ public class Cart {
 		while(iterator.hasNext()){
 			Product product = (Product)iterator.next();
 			double productPrice = quantity*product.getProductPrice();
-			if(productId.equals(product.getProductPrice())) {
+			if(productId.equals(product.getProductID())) {
 				System.out.println(product.getProductName() + ", " + quantity + " "
 						+ product.getProductPrice() + " " + productPrice);
 			}
-			removeItem(product);
 
 			if((product.getProductQuantity() - quantity) <= product.getProductMinOrderLevel() ){
 				product.reorder();
@@ -87,6 +86,7 @@ public class Cart {
 			if(product.isOrderPlaced() == true){
 				System.out.println("This product is already reordered, no action needed!");
 			}
+			removeItem(product);
 		}
 		System.out.println("Total: " + getTotalPrice());
 	}
