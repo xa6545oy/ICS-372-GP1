@@ -1,6 +1,8 @@
 package edu.ics372.GroupProject1.facade;
 
+import edu.ics372.GroupProject1.collections.Cart;
 import edu.ics372.GroupProject1.collections.ProductList;
+import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
 
 import java.io.BufferedReader;
@@ -149,7 +151,7 @@ public class UserInterface {
 				addProduct();
 				break;
 			case CHECK_MEMBER_CART:
-
+				CheckOutMemberCart();
 				break;
 			case RETRIEVE_PRODUCT_INFO:
 				retrieveProductByName();
@@ -439,14 +441,23 @@ public class UserInterface {
 	public void processShipment(){
 		String productId = getInput("Enter product ID");
 		String deliveredQuantity = getInput("Enter quantity: ");
+		int quantity = Integer.parseInt(deliveredQuantity);
 		System.out.println("Stock of the product has been updated: ");
 		for(Product product: ProductList.getInstance()){
 			int currentQuantity = product.getProductQuantity();
 			if(productId.equals(product.getProductID())){
-				currentQuantity += deliveredQuantity;
+				currentQuantity +=quantity;
 				product.toString();
 			}
 		}
+	}
+
+	public void CheckOutMemberCart(){
+		Cart cart = new Cart();
+		String productId = getInput("Please enter product Id: ");
+		String quantity = getInput("Please enter quantity of your product: ");
+		int quantities = Integer.parseInt(quantity);
+		cart.checkOut(productId, quantities);
 	}
 
 

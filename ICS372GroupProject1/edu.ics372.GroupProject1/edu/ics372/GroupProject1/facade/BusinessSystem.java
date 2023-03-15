@@ -9,12 +9,14 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import edu.ics372.GroupProject1.collections.Cart;
 import edu.ics372.GroupProject1.collections.MemberList;
 import edu.ics372.GroupProject1.collections.ProductList;
 import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
 import edu.ics372.GroupProject1.iterators.MemberIterator;
 import edu.ics372.GroupProject1.iterators.ProductIterator;
+import jdk.internal.jshell.tool.JShellToolBuilder;
 
 public class BusinessSystem implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -220,5 +222,14 @@ public class BusinessSystem implements Serializable {
 
 		return iteratorOfName;
 	} // end of retrieveMemberWithName
+
+	public void checkout(Member member) {
+		Cart cart = new Cart(member);
+		if (cart != null) {
+			cart.checkOut("", 0);
+		} else {
+			System.out.println("Member does not have anything in cart.");
+		}
+	}
 
 }

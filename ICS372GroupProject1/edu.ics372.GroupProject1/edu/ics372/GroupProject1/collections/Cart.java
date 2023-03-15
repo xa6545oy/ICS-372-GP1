@@ -15,6 +15,9 @@ public class Cart {
 		products = new ArrayList<>();
 		quantities = new HashMap<>();
 	}
+	public Cart(){
+
+	}
 
 	/**
 	 * method takes a product and a quantity as input and adds them to the cart. If
