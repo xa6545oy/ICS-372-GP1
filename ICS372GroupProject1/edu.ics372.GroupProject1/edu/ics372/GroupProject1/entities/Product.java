@@ -1,6 +1,9 @@
 package edu.ics372.GroupProject1.entities;
 
+import edu.ics372.GroupProject1.collections.ProductList;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Product implements Serializable {
 

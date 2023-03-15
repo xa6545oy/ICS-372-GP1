@@ -71,9 +71,13 @@ public class ProductList implements Iterable<Product>, Serializable {
 			System.out.println("Product is already exists.");
 		} else {
 			products.add(product);
+			product.setOrderPlaced(false);
 			product.reorder();
 		}
 	}
+
+
+
 
 	/**
 	 * get product list

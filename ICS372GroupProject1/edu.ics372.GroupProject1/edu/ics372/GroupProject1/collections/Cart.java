@@ -1,9 +1,6 @@
 package edu.ics372.GroupProject1.collections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
@@ -62,6 +59,40 @@ public class Cart {
 
 		return totalPrice;
 	}
+
+	/**
+	 * method check out the items in cart
+	 * @param productId
+	 * @param quantity
+	 *
+	 */
+
+	public void checkOut(String productId, int quantity){
+		Iterator iterator = this.products.iterator();
+		while(iterator.hasNext()){
+			Product product = (Product)iterator.next();
+			double productPrice = quantity*product.getProductPrice();
+			if(productId.equals(product.getProductPrice())) {
+				System.out.println(product.getProductName() + ", " + quantity + " "
+						+ product.getProductPrice() + " " + productPrice);
+			}
+			removeItem(product);
+
+			if((product.getProductQuantity() - quantity) <= product.getProductMinOrderLevel() ){
+				product.reorder();
+				product.setOrderPlaced(true);
+				String message = "You have successfully reorder " + product.getProductName();
+				System.out.println(message);
+			}
+			if(product.isOrderPlaced() == true){
+				System.out.println("This product is already reordered, no action needed!");
+			}
+		}
+		System.out.println("Total: " + getTotalPrice());
+	}
+
+
+
 
 //	public void checkout() {
 //		System.out.println("Items in cart: ");

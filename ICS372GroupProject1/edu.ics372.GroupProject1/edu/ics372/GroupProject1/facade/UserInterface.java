@@ -1,5 +1,8 @@
 package edu.ics372.GroupProject1.facade;
 
+import edu.ics372.GroupProject1.collections.ProductList;
+import edu.ics372.GroupProject1.entities.Product;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -431,5 +434,17 @@ public class UserInterface {
 			e.printStackTrace();
 		}
 	} // end printTransaction()
+
+	public void processShipment(String productId, int deliveredQuantity){
+		for(Product product: ProductList.getInstance()){
+			int currentQuantity = product.getProductQuantity();
+			if(productId.equals(product.getProductID())){
+				currentQuantity += deliveredQuantity;
+				product.toString();
+			}
+
+
+		}
+	}
 
 }
