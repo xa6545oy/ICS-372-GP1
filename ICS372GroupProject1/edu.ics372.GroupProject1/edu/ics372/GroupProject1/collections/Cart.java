@@ -81,7 +81,7 @@ public class Cart {
 			if((product.getProductQuantity() - quantity) <= product.getProductMinOrderLevel() ){
 				product.reorder();
 				product.setOrderPlaced(true);
-				String message = "You have successfully reorder " + product.getProductName();
+				String message = "You have successfully reordered " + product.getProductName();
 				System.out.println(message);
 			}
 			if(product.isOrderPlaced() == true){
