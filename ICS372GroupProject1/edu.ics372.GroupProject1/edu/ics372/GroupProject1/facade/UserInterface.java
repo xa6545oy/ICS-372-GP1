@@ -162,7 +162,7 @@ public class UserInterface {
 				processShipment();
 				break;
 			case CHANGE_PRICE:
-
+				changePrice();
 				break;
 			case PRINT_TRANSACTION:
 				printTransaction();
@@ -462,7 +462,23 @@ public class UserInterface {
 			}
 		}
 	}
-
+	
+	/**
+	 * Changes the price of a select product
+	 */
+	public void changePrice() {
+		String productID = getInput("Enter product ID");
+		String newPrice = getInput("Enter new price");
+		for (Product product : ProductList.getInstance()) {
+			if (productID.equals(product.getProductID())) {
+				product.setProductPrice(Double.parseDouble(newPrice));
+				System.out.println(product.getProductName());
+				System.out.println("Price: " + product.getProductPrice());
+			}
+		}
+	}
+	
+	
 	/**
 	 * user input data to check member out with products in cart
 	 */
