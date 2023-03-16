@@ -76,8 +76,21 @@ public class ProductList implements Iterable<Product>, Serializable {
 		}
 	}
 
+	/*
+	 * Removes a product from the productList
+	 * 
+	 * @param productID is the product id
+	 * 
+	 * @return true if product is removed
+	 */
+	public boolean removeProduct(String productID) {
+		Product product = searchProduct(productID);
 
-
+		if (product == null)
+			return false;
+		else
+			return products.remove(product);
+	}
 
 	/**
 	 * get product list

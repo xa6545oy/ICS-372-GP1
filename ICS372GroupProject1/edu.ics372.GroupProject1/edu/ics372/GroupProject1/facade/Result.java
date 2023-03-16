@@ -16,6 +16,11 @@ public class Result extends DataTransfer {
 		return resultCode;
 	}
 
+	/*
+	 * Get result code
+	 * 
+	 * @return resultCode
+	 */
 	public void setResultCode(int resultCode) {
 		this.resultCode = resultCode;
 	}

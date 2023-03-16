@@ -10,6 +10,11 @@ public class ProductIterator implements Iterator<Result> {
 	private Iterator<Product> iterator;
 	private Result result = new Result();
 
+	/**
+	 * The user of ProductIterator must supply an Iterator to Product.
+	 * 
+	 * @param iterator Iterator<Product>
+	 */
 	public ProductIterator(Iterator<Product> iterator) {
 		this.iterator = iterator;
 	}
@@ -24,7 +29,7 @@ public class ProductIterator implements Iterator<Result> {
 		if (iterator.hasNext()) {
 			result.setProductFields(iterator.next());
 		} else {
-			throw new NoSuchElementException("No such element");
+			throw new NoSuchElementException("No element");
 		}
 		return result;
 	}

@@ -55,6 +55,9 @@ public class Test {
 		assert BusinessSystem.instance().searchMember(Request.instance()) == null;
 	}
 
+	/*
+	 * Test all methods
+	 */
 	public void testAll() {
 		testAddMember();
 		testAddProduct();

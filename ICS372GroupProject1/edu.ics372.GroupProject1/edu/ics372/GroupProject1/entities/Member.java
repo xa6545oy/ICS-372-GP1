@@ -100,7 +100,7 @@ public class Member implements Serializable {
 	public void setMemberName(String newName) {
 		name = newName;
 	}
-	
+
 	/*
 	 * Setter for address
 	 * 
@@ -109,7 +109,7 @@ public class Member implements Serializable {
 	public void setMemberAddress(String newAddress) {
 		address = newAddress;
 	}
-	
+
 	/*
 	 * Setter for phone
 	 * 
@@ -118,7 +118,7 @@ public class Member implements Serializable {
 	public void setMemberPhone(String newPhone) {
 		phone = newPhone;
 	}
-	
+
 	/*
 	 * Setter for fee
 	 * 
@@ -127,8 +127,6 @@ public class Member implements Serializable {
 	public void setMemberFee(double newFee) {
 		fee = newFee;
 	}
-	
-	
 
 	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
 		idCounter = (int) input.readObject();
@@ -137,4 +135,16 @@ public class Member implements Serializable {
 	public static void save(ObjectOutputStream output) throws IOException {
 		output.writeObject(idCounter);
 	}
+
+	/**
+	 * Print to the system
+	 * 
+	 * @param id, name, address, phone, fee, dateJoined
+	 */
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", + name=" + name + ", address=" + address + ", phone=" + phone + " + , fee=" + fee
+				+ ", dateJoined=" + dateJoined + "]";
+	}
+
 }

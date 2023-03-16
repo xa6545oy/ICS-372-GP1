@@ -42,10 +42,22 @@ public class BusinessSystem implements Serializable {
 		return new ProductIterator(products.iterator());
 	}
 
+	/**
+	 * Returns an iterator to Member info. The Iterator returned is a safe one, in
+	 * the sense that only copies of the Member fields are assembled into the
+	 * objects returned via next().
+	 * 
+	 * @return an Iterator to Result - only the Member fields are valid.
+	 */
 	public Iterator<Result> getMembers() {
 		return new MemberIterator(members.iterator());
 	}
 
+	/**
+	 * Singleton pattern
+	 * 
+	 * @return the singleton object
+	 */
 	public static BusinessSystem instance() {
 		if (business == null) {
 			return business = new BusinessSystem();
@@ -245,7 +257,6 @@ public class BusinessSystem implements Serializable {
 	 * 
 	 * @param member
 	 */
-
 	public void checkout(Member member) {
 		Cart cart = new Cart(member);
 		if (cart != null) {

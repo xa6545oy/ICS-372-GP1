@@ -430,14 +430,19 @@ public class UserInterface {
 		}
 	} // end retrieveProductByName
 
+	/*
+	 * Method to be called for printing transaction. Prompts user to enter member ID
+	 * and start date and end date
+	 */
 	public void printTransaction() {
 		while (true) {
 			Request.instance().setMemberId(getInput("Enter member ID: "));
 			Request.instance().setStartDate(getDate("Enter start date (mm/dd/yyyy): "));
 			Request.instance().setEndDate(getDate("Enter end date (mm/dd/yyyy): "));
-		
-			//Working on this
-			
+
+			// NEED TO WORK ON THIS
+
+		}
 	}
 
 	/**

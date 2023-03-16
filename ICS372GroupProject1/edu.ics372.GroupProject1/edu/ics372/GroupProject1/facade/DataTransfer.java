@@ -1,8 +1,9 @@
 package edu.ics372.GroupProject1.facade;
 
+import java.util.Date;
+
 import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
-import java.util.Date;
 
 public abstract class DataTransfer {
 	private String productId;
@@ -10,7 +11,7 @@ public abstract class DataTransfer {
 	private double productPrice;
 	private int productMinOrderLevel;
 	private int productQuantity;
-	
+
 	private String memberName;
 	private String memberAddress;
 	private String memberPhone;
@@ -62,6 +63,11 @@ public abstract class DataTransfer {
 		return productQuantity;
 	}
 
+	/**
+	 * Sets all the product-related fields using the Product parameter.
+	 * 
+	 * @param product the product whose fields should be copied.
+	 */
 	public void setProductFields(Product product) {
 
 		productId = product.getProductID();
@@ -71,56 +77,61 @@ public abstract class DataTransfer {
 		productQuantity = product.getProductQuantity();
 
 	} // end setProdictFields
-	
+
 	// Getters and setters for member
 	public String getMemberName() {
 		return memberName;
 	}
-	
+
 	public String getMemberAddress() {
 		return memberAddress;
 	}
-	
+
 	public String getMemberPhone() {
 		return memberPhone;
 	}
-	
+
 	public double getMemberFee() {
 		return memberFee;
 	}
-	
+
 	public String getMemberId() {
 		return memberId;
 	}
-	
+
 	public Date getMemberJoinDate() {
 		return memberJoinDate;
 	}
-	
+
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
-	
+
 	public void setMemberAddress(String memberAddress) {
 		this.memberAddress = memberAddress;
 	}
-	
+
 	public void setMemberFee(double memberFee) {
 		this.memberFee = memberFee;
 	}
-	
+
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
-	
+
 	public void setMemberJoinDate(Date memberJoinDate) {
 		this.memberJoinDate = memberJoinDate;
 	}
-	
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	
+
+	/**
+	 * Sets all the member-related fields using the Member parameter.
+	 * 
+	 * @param member the member whose fields should be copied.
+	 */
 	public void setMemberFields(Member member) {
 
 		memberName = member.getMemberName();
@@ -130,7 +141,10 @@ public abstract class DataTransfer {
 		memberId = member.getMemberId();
 
 	}
-	
+
+	/**
+	 * Reset all fields
+	 */
 	public void reset() {
 		productId = "Invalid product ID";
 		productName = "No product Name";
