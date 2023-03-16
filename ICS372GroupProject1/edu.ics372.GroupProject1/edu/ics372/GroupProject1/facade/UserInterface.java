@@ -1,18 +1,20 @@
 package edu.ics372.GroupProject1.facade;
 
-import edu.ics372.GroupProject1.collections.Cart;
-import edu.ics372.GroupProject1.collections.ProductList;
-import edu.ics372.GroupProject1.entities.Member;
-import edu.ics372.GroupProject1.entities.Product;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.lang.reflect.RecordComponent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import edu.ics372.GroupProject1.collections.Cart;
+import edu.ics372.GroupProject1.collections.ProductList;
+import edu.ics372.GroupProject1.entities.Product;
 
 public class UserInterface {
 
@@ -145,7 +147,7 @@ public class UserInterface {
 				removeMember();
 				break;
 			case RETRIEVE_MEMBER_INFO:
-				// retrieveMemberInfo();
+				retrieveMemberInfo();
 				break;
 			case ADD_PRODUCTS:
 				addProduct();
@@ -157,7 +159,7 @@ public class UserInterface {
 				retrieveProductByName();
 				break;
 			case PROCESS_SHIPMENT:
-                processShipment();
+				processShipment();
 				break;
 			case CHANGE_PRICE:
 
@@ -349,8 +351,10 @@ public class UserInterface {
 				break;
 			case Result.OPERATION_COMPLETED:
 				System.out.println("Member was successfully removed.");
+				break;
 			default:
 				System.out.println("There are no more members.");
+				break;
 			} // end of switch
 
 			if (!yesOrNo("Remove more members?"))
@@ -427,30 +431,28 @@ public class UserInterface {
 	} // end retrieveProductByName
 
 	public void printTransaction() {
-		String memberID = getInput("Enter member ID: ");
-		String startDate = getInput("Enter start date (mm/dd/yyyy): ");
-		String endDate = getInput("Enter end date (mm/dd/yyyy): ");
-
-		try {
-			business.printTransactions(memberId, startDateString, endDateString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	} // end printTransaction()
+		while (true) {
+			Request.instance().setMemberId(getInput("Enter member ID: "));
+			Request.instance().setStartDate(getDate("Enter start date (mm/dd/yyyy): "));
+			Request.instance().setEndDate(getDate("Enter end date (mm/dd/yyyy): "));
+		
+			//Working on this
+			
+	}
 
 	/**
 	 * method prompting user to enter data and update new stock for the product
 	 */
 
-	public void processShipment(){
+	public void processShipment() {
 		String productId = getInput("Enter product ID");
 		String deliveredQuantity = getInput("Enter quantity: ");
 		int quantity = Integer.parseInt(deliveredQuantity);
 		System.out.println("Stock of the product has been updated: ");
-		for(Product product: ProductList.getInstance()){
+		for (Product product : ProductList.getInstance()) {
 			int currentQuantity = product.getProductQuantity();
-			if(productId.equals(product.getProductID())){
-				currentQuantity +=quantity;
+			if (productId.equals(product.getProductID())) {
+				currentQuantity += quantity;
 				product.toString();
 			}
 		}
@@ -460,7 +462,7 @@ public class UserInterface {
 	 * user input data to check member out with products in cart
 	 */
 
-	public void CheckOutMemberCart(){
+	public void CheckOutMemberCart() {
 		Cart cart = new Cart();
 		String productId = getInput("Please enter product Id: ");
 		String quantity = getInput("Please enter quantity of your product: ");
@@ -468,7 +470,24 @@ public class UserInterface {
 		cart.checkOut(productId, quantities);
 	}
 
-
-
+	/**
+	 * Prompts for a date and gets a date object
+	 * 
+	 * @param prompt the prompt
+	 * @return the data as a Calendar object
+	 */
+	public Calendar getDate(String prompt) {
+		do {
+			try {
+				Calendar date = new GregorianCalendar();
+				String item = getToken(prompt);
+				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+				date.setTime(dateFormat.parse(item));
+				return date;
+			} catch (Exception fe) {
+				System.out.println("Please input a date as mm/dd/yy");
+			}
+		} while (true);
+	}
 
 }

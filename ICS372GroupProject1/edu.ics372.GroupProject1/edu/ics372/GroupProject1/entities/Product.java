@@ -1,9 +1,6 @@
 package edu.ics372.GroupProject1.entities;
 
-import edu.ics372.GroupProject1.collections.ProductList;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Product implements Serializable {
 
@@ -33,7 +30,7 @@ public class Product implements Serializable {
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.productMinOrderLevel = productMinOrderLevel;
-		this.productQuantity = productMinOrderLevel * 2;
+		this.productQuantity = 0;
 		this.orderPlaced = false;
 
 		productID = PRODUCT_STRING + ++idCounter;

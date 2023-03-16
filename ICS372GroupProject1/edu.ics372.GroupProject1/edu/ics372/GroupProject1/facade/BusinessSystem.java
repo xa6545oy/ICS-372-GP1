@@ -16,7 +16,6 @@ import edu.ics372.GroupProject1.entities.Member;
 import edu.ics372.GroupProject1.entities.Product;
 import edu.ics372.GroupProject1.iterators.MemberIterator;
 import edu.ics372.GroupProject1.iterators.ProductIterator;
-import jdk.internal.jshell.tool.JShellToolBuilder;
 
 public class BusinessSystem implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -76,6 +75,24 @@ public class BusinessSystem implements Serializable {
 			return null;
 		}
 	} // end of retrieve
+
+	/**
+	 * Searches for a given member
+	 * 
+	 * @param memberId id of the member
+	 * @return true iff the member is in the member list collection
+	 */
+	public Result searchMember(Request request) {
+		Result result = new Result();
+		Member member = members.search(request.getMemberId());
+		if (member == null) {
+			result.setResultCode(Result.MEMBER_NOT_FOUND);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setMemberFields(member);
+		}
+		return result;
+	}
 
 	/**
 	 * Organizes the operations for adding a product
@@ -225,6 +242,7 @@ public class BusinessSystem implements Serializable {
 
 	/**
 	 * checking if member can be checked out
+	 * 
 	 * @param member
 	 */
 
@@ -232,9 +250,8 @@ public class BusinessSystem implements Serializable {
 		Cart cart = new Cart(member);
 		if (cart != null) {
 			cart.checkOut("", 0);
-		} else {
+		} else
 			System.out.println("Member does not have anything in cart.");
-		}
 	}
 
 }

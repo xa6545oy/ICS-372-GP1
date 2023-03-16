@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Request extends DataTransfer {
 	private static Request request;
-	private Calendar date;
+	private Calendar startDate, endDate;
 
 	private Request() {
 
@@ -22,11 +22,19 @@ public class Request extends DataTransfer {
 		return request;
 	}
 
-	public Calendar getDate() {
-		return date;
+	public Calendar getStartDate() {
+		return startDate;
 	}// end getDate
 
-	public void setDate(Calendar date) {
-		this.date = date;
+	public void setStartDate(Calendar startDate) {
+		this.startDate = startDate;
+	}
+
+	public Calendar getDate() {
+		return endDate;
+	}// end getDate
+
+	public void setEndDate(Calendar endDate) {
+		this.endDate = endDate;
 	}
 }
