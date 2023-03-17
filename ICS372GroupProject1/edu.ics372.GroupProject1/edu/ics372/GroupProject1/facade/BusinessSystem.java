@@ -174,10 +174,11 @@ public class BusinessSystem implements Serializable {
 		if (product == null) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
+		} else {
+			product.setProductPrice(request.getProductPrice());
+			result.setProductFields(product);
+			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
-		result.setProductFields(product);
-		result.setProductPrice(request.getProductPrice());
-		result.setResultCode(Result.OPERATION_COMPLETED);
 		return result;
 	} // end changeProductPrice
 
@@ -240,7 +241,7 @@ public class BusinessSystem implements Serializable {
 	 */
 	public Iterator<Result> retrieveMemberWithName(Request request) {
 		LinkedList<Result> memberWithName = new LinkedList<Result>();
-
+		
 		for (Member member : members) {
 			if (member.getMemberName().equals(request.getMemberName())) {
 				Result result = new Result();
@@ -248,9 +249,19 @@ public class BusinessSystem implements Serializable {
 				memberWithName.add(result);
 			}
 		}
-
+		
+		if(memberWithName.isEmpty() == true) {
+			Result memberNotFound = new Result();
+			memberNotFound.setResultCode(Result.MEMBER_NOT_FOUND);
+			memberWithName.add(memberNotFound);
+		} else {
+			Result memberFound = new Result();
+			memberFound.setResultCode(Result.MEMBER_FOUND);
+			memberWithName.addFirst(memberFound);
+		}
+		
 		Iterator<Result> iteratorOfName = memberWithName.iterator();
-
+		
 		return iteratorOfName;
 	} // end of retrieveMemberWithName
 
@@ -263,33 +274,21 @@ public class BusinessSystem implements Serializable {
 	 * 
 	 * @return is a collection of all or one product information
 	 */
-	public Iterator<Result> retrieveProductWithName(Request request) {
-		LinkedList<Result> productWithname = new LinkedList<Result>();
-
+	public Result retrieveProductWithName(Request request) {
+		Result result = new Result();
+		Boolean checkIfProductExist = false;
 		for (Product product : products) {
 			if (product.getProductName().equals(request.getProductName())) {
-				Result result = new Result();
 				result.setProductFields(product);
-				productWithname.add(result);
+				checkIfProductExist = true;
 			}
 		}
-
-		Iterator<Result> iteratorOfName = productWithname.iterator();
-
-		return iteratorOfName;
+		
+		if(checkIfProductExist == false) {
+			result.setResultCode(Result.PRODUCT_NOT_FOUND);
+		}
+		
+		return result;
 	} // end of retrieveProductWithName
-
-	/**
-	 * checking if member can be checked out
-	 * 
-	 * @param member
-	 */
-	public void checkout(Member member) {
-		Cart cart = new Cart(member);
-		if (cart != null) {
-			cart.checkOut("", 0);
-		} else
-			System.out.println("Member does not have anything in cart.");
-	}
 
 }

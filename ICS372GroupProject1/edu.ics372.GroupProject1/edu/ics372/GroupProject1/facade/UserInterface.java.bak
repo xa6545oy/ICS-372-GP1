@@ -101,34 +101,12 @@ public class UserInterface {
 	 * 
 	 */
 	private boolean yesOrNo(String prompt) {
-		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		String more = getInput(prompt + " (Y|y)[es] or anything else for no");
 		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
 			return false;
 		}
 		return true;
 	} // end of yesOrNo
-
-	/**
-	 * Gets a token after prompting
-	 * 
-	 * @param prompt - whatever the user wants as prompt
-	 * @return - the token from the keyboard
-	 * 
-	 */
-	public String getToken(String prompt) {
-		do {
-			try {
-				System.out.println(prompt);
-				String line = reader.readLine();
-				StringTokenizer tokenizer = new StringTokenizer(line, "\n\r\f");
-				if (tokenizer.hasMoreTokens()) {
-					return tokenizer.nextToken();
-				}
-			} catch (IOException ioe) {
-				System.exit(0);
-			}
-		} while (true);
-	} // end of getToken
 
 	/**
 	 * Orchestrates the whole process. Calls the appropriate method for the
@@ -205,7 +183,7 @@ public class UserInterface {
 	public int getCommand() {
 		while (true) {
 			try {
-				int inputValue = Integer.parseInt(getToken("Enter command or 15 for help: "));
+				int inputValue = Integer.parseInt(getInput("Enter command or 15 for help: "));
 				if (inputValue >= EXIT && inputValue <= HELP) {
 					return inputValue;
 				}
@@ -246,10 +224,9 @@ public class UserInterface {
 		System.out.println("3.\tRetrieve member info");
 		System.out.println("4.\tAdd products");
 		System.out.println("5.\tCheck out a member’ cart");
-		System.out.println(
-				"6.\tRetrieve product info: Given a product name, the system displays the product’s id, price, and stock in hand.");
+		System.out.println("6.\tRetrieve product info");
 		System.out.println("7.\tProcess shipment");
-		System.out.println(CHANGE_PRICE + " to change price");
+		System.out.println("8.\tChange price of a product");
 		System.out.println("9.\tPrint transactions");
 		System.out.println("10.\tList all members. List name, id, and address of each member.");
 		System.out.println(
@@ -370,13 +347,19 @@ public class UserInterface {
 	public void retrieveMemberInfo() {
 		Request.instance().setMemberName(getInput("Enter the member's name: "));
 		Iterator<Result> memberWithName = business.retrieveMemberWithName(Request.instance());
-
-		System.out.println("Information on " + Request.instance().getMemberName() + " (address, fee paid, id): ");
-
-		while (memberWithName.hasNext()) {
-			Result result = memberWithName.next();
-			System.out.println(result.getMemberAddress() + " " + result.getMemberFee() + " " + result.getMemberId());
-		} // end of while loop
+		
+		Result result = memberWithName.next();
+		
+		if(result.getResultCode() == Result.MEMBER_NOT_FOUND) {
+			System.out.println("Member with the name " + Request.instance().getMemberName() + " does not exist!");
+		} else {
+			System.out.println("Information on " + Request.instance().getMemberName() + " (address, fee paid, id): ");
+			
+			while (memberWithName.hasNext()) {
+				result = memberWithName.next();
+				System.out.println(result.getMemberAddress() + " " + result.getMemberFee() + " " + result.getMemberId());
+			} // end of while loop
+		}
 
 	} // end of retrieveMemberInfo
 
@@ -411,17 +394,6 @@ public class UserInterface {
 		}
 	} // end of retrieve
 
-	public void retrieveProductByName() {
-		String productName = getInput("Enter product name: ");
-		try {
-			String info = business.getProductInfoByName(productName);
-			System.out.println(info);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	} // end retrieveProductByName
-
 	/*
 	 * Method to be called when retrieving a certain member's information using
 	 * their name as reference. If there are more than 1 member with the same name
@@ -429,14 +401,14 @@ public class UserInterface {
 	 */
 	public void retrieveProductInfo() {
 		Request.instance().setProductName(getInput("Enter the product's name: "));
-		Iterator<Result> productWithName = business.retrieveProductWithName(Request.instance());
-
-		System.out.println("Information on " + Request.instance().getProductName() + " : ");
-
-		while (productWithName.hasNext()) {
-			Result result = productWithName.next();
-			System.out.println(result);
-		} // end of while loop
+		Result result = business.retrieveProductWithName(Request.instance());
+		
+		if(result.getResultCode() == Result.PRODUCT_NOT_FOUND)
+			System.out.println("Product with name " + Request.instance().getProductName() + " does not exist!");
+		else {
+			System.out.println("Information on " + Request.instance().getProductName() + " (name, id, price, stock): ");
+			System.out.println(result.getProductName() + " " + result.getProductId() + " " + result.getProductPrice() + " "+ result.getProductQuantity());
+		}
 
 	} // end of retrieveMemberInfo
 
@@ -481,26 +453,17 @@ public class UserInterface {
 	 */
 
 	public void changeProductPrice() {
-		do {
-			Request.instance().setProductId(getToken("Enter product id"));
-			String peoductPriceString = getToken("Enter the new price for the product");
-			Request.instance().setProductPrice(Double.parseDouble(peoductPriceString));
-			Result result = business.changeProductPrice(Request.instance());
-			switch (result.getResultCode()) {
-			case Result.PRODUCT_NOT_FOUND:
-				System.out.println("No such Product with id " + Request.instance().getProductId() + " in the system.");
-				break;
-			case Result.OPERATION_COMPLETED:
-				System.out.println(result.getProductName() + " has a new price of " + result.getProductPrice());
-				System.out.println("The price of product " + result.getProductName() + " has been changed");
-				break;
-			default:
-				System.out.println("An error has occurred");
-			}
-			if (!yesOrNo("Change price for other Products?")) {
-				break;
-			}
-		} while (true);
+		Request.instance().setProductId(getInput("Enter product id: "));
+		double getNewPrice = Double.parseDouble(getInput("Enter new price for product: "));
+		Request.instance().setProductPrice(getNewPrice);
+		
+		Result result = business.changeProductPrice(Request.instance());
+		
+		if(result.getResultCode() == Result.PRODUCT_NOT_FOUND)
+			System.out.println("Product with id " + Request.instance().getProductId() + " does not exists!");
+		else {
+			System.out.println(result.getProductName() + " has a new price of " + result.getProductPrice());
+		}
 	}
 
 	/**
@@ -525,7 +488,7 @@ public class UserInterface {
 		do {
 			try {
 				Calendar date = new GregorianCalendar();
-				String item = getToken(prompt);
+				String item = getInput(prompt);
 				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
 				date.setTime(dateFormat.parse(item));
 				return date;
