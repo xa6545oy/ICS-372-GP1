@@ -156,7 +156,7 @@ public class UserInterface {
 				CheckOutMemberCart();
 				break;
 			case RETRIEVE_PRODUCT_INFO:
-				retrieveProductByName();
+				retrieveProductInfo();
 				break;
 			case PROCESS_SHIPMENT:
 				processShipment();
@@ -308,7 +308,7 @@ public class UserInterface {
 		Request.instance().setMemberName(getInput("Enter member name: "));
 		Request.instance().setMemberAddress(getInput("Enter member address: "));
 		Request.instance().setMemberPhone(getInput("Enter member phone number: "));
-		double amountPaid = Double.parseDouble(getInput("Please pay the membership fee of 50: "));
+		double amountPaid = Double.parseDouble(getInput("Please pay the membership fee of 50 (Enter amount): "));
 		while (amountPaid != MEMBERSHIP_FEE) {
 			if (amountPaid == 0)
 				return;
@@ -411,14 +411,6 @@ public class UserInterface {
 		}
 	} // end of retrieve
 
-	/*
-	 * Method to be called for retrieving all product by its name. Prompts user to
-	 * enter product name
-	 * 
-	 * @param productName
-	 * 
-	 * @return product information
-	 */
 	public void retrieveProductByName() {
 		String productName = getInput("Enter product name: ");
 		try {
@@ -429,6 +421,24 @@ public class UserInterface {
 			e.printStackTrace();
 		}
 	} // end retrieveProductByName
+
+	/*
+	 * Method to be called when retrieving a certain member's information using
+	 * their name as reference. If there are more than 1 member with the same name
+	 * it'll display all members with the name's information
+	 */
+	public void retrieveProductInfo() {
+		Request.instance().setProductName(getInput("Enter the product's name: "));
+		Iterator<Result> productWithName = business.retrieveProductWithName(Request.instance());
+
+		System.out.println("Information on " + Request.instance().getProductName() + " : ");
+
+		while (productWithName.hasNext()) {
+			Result result = productWithName.next();
+			System.out.println(result);
+		} // end of while loop
+
+	} // end of retrieveMemberInfo
 
 	/*
 	 * Method to be called for printing transaction. Prompts user to enter member ID

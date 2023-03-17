@@ -271,6 +271,31 @@ public class BusinessSystem implements Serializable {
 		return iteratorOfName;
 	} // end of retrieveMemberWithName
 
+	/*
+	 * Iterates through the product collection and adds all product with the name
+	 * into the productWithname collection and returns it
+	 * 
+	 * @param Request request is used to get the name of the product with the
+	 * information we want
+	 * 
+	 * @return is a collection of all or one product information
+	 */
+	public Iterator<Result> retrieveProductWithName(Request request) {
+		LinkedList<Result> productWithname = new LinkedList<Result>();
+
+		for (Product product : products) {
+			if (product.getProductName().equals(request.getProductName())) {
+				Result result = new Result();
+				result.setProductFields(product);
+				productWithname.add(result);
+			}
+		}
+
+		Iterator<Result> iteratorOfName = productWithname.iterator();
+
+		return iteratorOfName;
+	} // end of retrieveProductWithName
+
 	/**
 	 * checking if member can be checked out
 	 * 
