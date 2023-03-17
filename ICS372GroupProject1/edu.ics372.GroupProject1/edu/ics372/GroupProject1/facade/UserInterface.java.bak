@@ -5,8 +5,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import edu.ics372.GroupProject1.collections.Cart;
+import edu.ics372.GroupProject1.collections.ProductList;
+import edu.ics372.GroupProject1.entities.Product;
 
 public class UserInterface {
 
@@ -139,25 +147,25 @@ public class UserInterface {
 				removeMember();
 				break;
 			case RETRIEVE_MEMBER_INFO:
-				// retrieveMemberInfo();
+				retrieveMemberInfo();
 				break;
 			case ADD_PRODUCTS:
 				addProduct();
 				break;
 			case CHECK_MEMBER_CART:
-
+				CheckOutMemberCart();
 				break;
 			case RETRIEVE_PRODUCT_INFO:
-				retrieveProductByName();
+				retrieveProductInfo();
 				break;
 			case PROCESS_SHIPMENT:
-
+				processShipment();
 				break;
 			case CHANGE_PRICE:
-
+				changeProductPrice();
 				break;
 			case PRINT_TRANSACTION:
-
+				printTransaction();
 				break;
 			case LIST_ALL_MEMBERS:
 				listMembers();
@@ -176,6 +184,11 @@ public class UserInterface {
 				break;
 			case HELP:
 				help();
+				break;
+			case EXIT:
+				exit();
+				break;
+			default:
 				break;
 			} // end of switch case
 		} // end of while loop
@@ -236,7 +249,7 @@ public class UserInterface {
 		System.out.println(
 				"6.\tRetrieve product info: Given a product name, the system displays the product’s id, price, and stock in hand.");
 		System.out.println("7.\tProcess shipment");
-		System.out.println("8.\tChange price");
+		System.out.println(CHANGE_PRICE + " to change price");
 		System.out.println("9.\tPrint transactions");
 		System.out.println("10.\tList all members. List name, id, and address of each member.");
 		System.out.println(
@@ -295,7 +308,7 @@ public class UserInterface {
 		Request.instance().setMemberName(getInput("Enter member name: "));
 		Request.instance().setMemberAddress(getInput("Enter member address: "));
 		Request.instance().setMemberPhone(getInput("Enter member phone number: "));
-		double amountPaid = Double.parseDouble(getInput("Please pay the membership fee of 50: "));
+		double amountPaid = Double.parseDouble(getInput("Please pay the membership fee of 50 (Enter amount): "));
 		while (amountPaid != MEMBERSHIP_FEE) {
 			if (amountPaid == 0)
 				return;
@@ -338,32 +351,35 @@ public class UserInterface {
 				break;
 			case Result.OPERATION_COMPLETED:
 				System.out.println("Member was successfully removed.");
+				break;
 			default:
 				System.out.println("There are no more members.");
+				break;
 			} // end of switch
 
 			if (!yesOrNo("Remove more members?"))
 				break;
 		} while (true);
 	} // end of removeMember
-	
+
 	/*
-	 * Method to be called when retrieving a certian member's information using their name as reference.
-	 * If there are more than 1 member with the same name it'll display all members with the name's information
+	 * Method to be called when retrieving a certain member's information using
+	 * their name as reference. If there are more than 1 member with the same name
+	 * it'll display all members with the name's information
 	 */
 	public void retrieveMemberInfo() {
 		Request.instance().setMemberName(getInput("Enter the member's name: "));
 		Iterator<Result> memberWithName = business.retrieveMemberWithName(Request.instance());
-		
+
 		System.out.println("Information on " + Request.instance().getMemberName() + " (address, fee paid, id): ");
-		
-		while(memberWithName.hasNext()) {
+
+		while (memberWithName.hasNext()) {
 			Result result = memberWithName.next();
 			System.out.println(result.getMemberAddress() + " " + result.getMemberFee() + " " + result.getMemberId());
 		} // end of while loop
-		
+
 	} // end of retrieveMemberInfo
-	
+
 	/**
 	 * Saving the Business object
 	 */
@@ -395,14 +411,6 @@ public class UserInterface {
 		}
 	} // end of retrieve
 
-	/*
-	 * Method to be called for retrieving all product by its name. Prompts user to
-	 * enter product name
-	 * 
-	 * @param productName
-	 * 
-	 * @return product information
-	 */
 	public void retrieveProductByName() {
 		String productName = getInput("Enter product name: ");
 		try {
@@ -413,5 +421,118 @@ public class UserInterface {
 			e.printStackTrace();
 		}
 	} // end retrieveProductByName
+
+	/*
+	 * Method to be called when retrieving a certain member's information using
+	 * their name as reference. If there are more than 1 member with the same name
+	 * it'll display all members with the name's information
+	 */
+	public void retrieveProductInfo() {
+		Request.instance().setProductName(getInput("Enter the product's name: "));
+		Iterator<Result> productWithName = business.retrieveProductWithName(Request.instance());
+
+		System.out.println("Information on " + Request.instance().getProductName() + " : ");
+
+		while (productWithName.hasNext()) {
+			Result result = productWithName.next();
+			System.out.println(result);
+		} // end of while loop
+
+	} // end of retrieveMemberInfo
+
+	/*
+	 * Method to be called for printing transaction. Prompts user to enter member ID
+	 * and start date and end date
+	 */
+	public void printTransaction() {
+		while (true) {
+			Request.instance().setMemberId(getInput("Enter member ID: "));
+			Request.instance().setStartDate(getDate("Enter start date (mm/dd/yyyy): "));
+			Request.instance().setEndDate(getDate("Enter end date (mm/dd/yyyy): "));
+
+			// NEED TO WORK ON THIS
+
+		}
+	}
+
+	/**
+	 * method prompting user to enter data and update new stock for the product
+	 */
+
+	public void processShipment() {
+		String productId = getInput("Enter product ID");
+		String deliveredQuantity = getInput("Enter quantity: ");
+		int quantity = Integer.parseInt(deliveredQuantity);
+		System.out.println("Stock of the product has been updated: ");
+		for (Product product : ProductList.getInstance()) {
+			int currentQuantity = product.getProductQuantity();
+			if (productId.equals(product.getProductID())) {
+				currentQuantity += quantity;
+				product.toString();
+			}
+		}
+	}
+
+	/**
+	 * Give a new price for a specific product, the method will call the business
+	 * system to change the price of the specified product.
+	 *
+	 * @return the product with its changed(new) price.
+	 */
+
+	public void changeProductPrice() {
+		do {
+			Request.instance().setProductId(getToken("Enter product id"));
+			String peoductPriceString = getToken("Enter the new price for the product");
+			Request.instance().setProductPrice(Double.parseDouble(peoductPriceString));
+			Result result = business.changeProductPrice(Request.instance());
+			switch (result.getResultCode()) {
+			case Result.PRODUCT_NOT_FOUND:
+				System.out.println("No such Product with id " + Request.instance().getProductId() + " in the system.");
+				break;
+			case Result.OPERATION_COMPLETED:
+				System.out.println(result.getProductName() + " has a new price of " + result.getProductPrice());
+				System.out.println("The price of product " + result.getProductName() + " has been changed");
+				break;
+			default:
+				System.out.println("An error has occurred");
+			}
+			if (!yesOrNo("Change price for other Products?")) {
+				break;
+			}
+		} while (true);
+	}
+
+	/**
+	 * user input data to check member out with products in cart
+	 */
+
+	public void CheckOutMemberCart() {
+		Cart cart = new Cart();
+		String productId = getInput("Please enter product Id: ");
+		String quantity = getInput("Please enter quantity of your product: ");
+		int quantities = Integer.parseInt(quantity);
+		cart.checkOut(productId, quantities);
+	}
+
+	/**
+	 * Prompts for a date and gets a date object
+	 * 
+	 * @param prompt the prompt
+	 * @return the data as a Calendar object
+	 */
+	public Calendar getDate(String prompt) {
+		do {
+			try {
+				Calendar date = new GregorianCalendar();
+				String item = getToken(prompt);
+				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+				date.setTime(dateFormat.parse(item));
+				return date;
+			} catch (Exception fe) {
+				System.out.println("Please input a date as mm/dd/yy");
+			}
+		} while (true);
+	}
 
 }

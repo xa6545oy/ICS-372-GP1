@@ -411,17 +411,6 @@ public class UserInterface {
 		}
 	} // end of retrieve
 
-	public void retrieveProductByName() {
-		String productName = getInput("Enter product name: ");
-		try {
-			String info = business.getProductInfoByName(productName);
-			System.out.println(info);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	} // end retrieveProductByName
-
 	/*
 	 * Method to be called when retrieving a certain member's information using
 	 * their name as reference. If there are more than 1 member with the same name
@@ -431,11 +420,11 @@ public class UserInterface {
 		Request.instance().setProductName(getInput("Enter the product's name: "));
 		Iterator<Result> productWithName = business.retrieveProductWithName(Request.instance());
 
-		System.out.println("Information on " + Request.instance().getProductName() + " : ");
+		System.out.println("Information on " + Request.instance().getProductName() + " (name, id, price, stock): ");
 
 		while (productWithName.hasNext()) {
 			Result result = productWithName.next();
-			System.out.println(result);
+			System.out.println(result.getProductName() + " " + result.getProductId() + " " + result.getProductPrice() + " "+ result.getProductQuantity());
 		} // end of while loop
 
 	} // end of retrieveMemberInfo
@@ -534,5 +523,3 @@ public class UserInterface {
 			}
 		} while (true);
 	}
-
-}

@@ -163,23 +163,6 @@ public class BusinessSystem implements Serializable {
 	} // end getProductByName
 
 	/**
-	 * Given a product name, the system return the product name, id, price, min
-	 * order level, quantity. if not found, notify user.
-	 * 
-	 * @return product
-	 */
-	public String getProductInfoByName(String productName) {
-		Product product = getProductByName(productName);
-		if (product != null) {
-			return "Product Name: " + product.getProductName() + "Product ID: " + product.getProductID() + ", Price: "
-					+ product.getProductPrice() + ", Minimun order level: " + product.getProductMinOrderLevel()
-					+ ", Stock quantity: " + product.getProductQuantity();
-		} else {
-			return "Product not found!!";
-		}
-	} // end getProductInfoByName
-
-	/**
 	 * Given a product id, the system search for the product and change the price of
 	 * the product
 	 *
