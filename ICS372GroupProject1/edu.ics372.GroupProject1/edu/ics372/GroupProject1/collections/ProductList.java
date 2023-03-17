@@ -43,7 +43,7 @@ public class ProductList implements Iterable<Product>, Serializable {
 		Iterator<Product> productIterator = products.iterator();
 		while (productIterator.hasNext()) {
 			Product targetProduct = productIterator.next();
-			if (targetProduct.getProductID() == productID) {
+			if ( targetProduct.getProductID().equals(productID) ) {
 				return targetProduct;
 			} // end if
 		} // end while loop
