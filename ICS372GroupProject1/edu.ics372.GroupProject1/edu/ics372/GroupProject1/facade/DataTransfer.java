@@ -8,7 +8,7 @@ import edu.ics372.GroupProject1.entities.Product;
 public abstract class DataTransfer {
 	private String productId;
 	private String productName;
-	private String productPrice;
+	private double productPrice;
 	private int productMinOrderLevel;
 	private int productQuantity;
 
@@ -43,11 +43,11 @@ public abstract class DataTransfer {
 		this.productName = productName;
 	}
 
-	public String getProductPrice() {
+	public double getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(String productPrice) {
+	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
 

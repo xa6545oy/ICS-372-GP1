@@ -178,16 +178,16 @@ public class BusinessSystem implements Serializable {
 			return "Product not found!!";
 		}
 	} // end getProductInfoByName
-	
+
 	/**
-	 *	Given a product id, the system search for the product and 
-	 *	change the price of the product
+	 * Given a product id, the system search for the product and change the price of
+	 * the product
 	 *
-	 *	@return		the product with its changed (new) price 
+	 * @return the product with its changed (new) price
 	 */
-	public Result changeProductPrice (Request request) {
+	public Result changeProductPrice(Request request) {
 		Result result = new Result();
-		Product product = ProductList.searchProduct(request.getProductID());
+		Product product = products.searchProduct(request.getProductId());
 		if (product == null) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
@@ -197,7 +197,7 @@ public class BusinessSystem implements Serializable {
 		result.setResultCode(Result.OPERATION_COMPLETED);
 		return result;
 	} // end changeProductPrice
-	
+
 	/**
 	 * Organizes the operations for adding a member
 	 * 

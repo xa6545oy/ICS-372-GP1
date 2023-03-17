@@ -462,22 +462,23 @@ public class UserInterface {
 			}
 		}
 	}
-	
+
 	/**
-	 * Give a new price for a specific product, the method
-	 * will call the business system to change the price of the specified product.
+	 * Give a new price for a specific product, the method will call the business
+	 * system to change the price of the specified product.
 	 *
-	 * @return	the product with its changed(new) price. 
+	 * @return the product with its changed(new) price.
 	 */
-	
-	public void changeProductPrice () {
+
+	public void changeProductPrice() {
 		do {
-			Request.instance().setProductID(getToken("Enter product id"));
-			Request.instance().setProductPrice(getToken("Enter the new price for the product"));
-			Result result = businessSystem.changeProductPrice(Request.instance());
+			Request.instance().setProductId(getToken("Enter product id"));
+			String peoductPriceString = getToken("Enter the new price for the product");
+			Request.instance().setProductPrice(Double.parseDouble(peoductPriceString));
+			Result result = business.changeProductPrice(Request.instance());
 			switch (result.getResultCode()) {
 			case Result.PRODUCT_NOT_FOUND:
-				System.out.println("No such Product with id " + Request.instance().getProductID() + " in the system.");
+				System.out.println("No such Product with id " + Request.instance().getProductId() + " in the system.");
 				break;
 			case Result.OPERATION_COMPLETED:
 				System.out.println(result.getProductName() + " has a new price of " + result.getProductPrice());
@@ -491,7 +492,7 @@ public class UserInterface {
 			}
 		} while (true);
 	}
-	
+
 	/**
 	 * user input data to check member out with products in cart
 	 */
