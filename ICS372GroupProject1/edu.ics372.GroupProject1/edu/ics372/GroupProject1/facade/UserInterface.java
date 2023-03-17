@@ -162,7 +162,7 @@ public class UserInterface {
 				processShipment();
 				break;
 			case CHANGE_PRICE:
-				changePrice();
+				changeProductPrice();
 				break;
 			case PRINT_TRANSACTION:
 				printTransaction();
@@ -249,7 +249,7 @@ public class UserInterface {
 		System.out.println(
 				"6.\tRetrieve product info: Given a product name, the system displays the product’s id, price, and stock in hand.");
 		System.out.println("7.\tProcess shipment");
-		System.out.println("8.\tChange price");
+		System.out.println(CHANGE_PRICE + " to change price");
 		System.out.println("9.\tPrint transactions");
 		System.out.println("10.\tList all members. List name, id, and address of each member.");
 		System.out.println(
@@ -464,20 +464,33 @@ public class UserInterface {
 	}
 	
 	/**
-	 * Changes the price of a select product
+	 * Give a new price for a specific product, the method
+	 * will call the business system to change the price of the specified product.
+	 *
+	 * @return	the product with its changed(new) price. 
 	 */
-	public void changePrice() {
-		String productID = getInput("Enter product ID");
-		String newPrice = getInput("Enter new price");
-		for (Product product : ProductList.getInstance()) {
-			if (productID.equals(product.getProductID())) {
-				product.setProductPrice(Double.parseDouble(newPrice));
-				System.out.println(product.getProductName());
-				System.out.println("Price: " + product.getProductPrice());
-			}
-		}
-	}
 	
+	public void changeProductPrice () {
+		do {
+			Request.instance().setProductID(getToken("Enter product id"));
+			Request.instance().setProductPrice(getToken("Enter the new price for the product"));
+			Result result = businessSystem.changeProductPrice(Request.instance());
+			switch (result.getResultCode()) {
+			case Result.PRODUCT_NOT_FOUND:
+				System.out.println("No such Product with id " + Request.instance().getProductID() + " in the system.");
+				break;
+			case Result.OPERATION_COMPLETED:
+				System.out.println(result.getProductName() + " has a new price of " + result.getProductPrice());
+				System.out.println("The price of product " + result.getProductName() + " has been changed");
+				break;
+			default:
+				System.out.println("An error has occurred");
+			}
+			if (!yesOrNo("Change price for other Products?")) {
+				break;
+			}
+		} while (true);
+	}
 	
 	/**
 	 * user input data to check member out with products in cart
